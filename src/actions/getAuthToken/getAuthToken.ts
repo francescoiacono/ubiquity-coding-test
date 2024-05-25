@@ -4,6 +4,7 @@ import urlJoin from 'url-join';
 import { AuthToken } from '@/types/AuthToken';
 import { getVariables } from './utils/getVariables';
 import { httpFetch } from '@/utils/httpFetch/httpFetch';
+import { setCookie } from '@/utils/setCookie';
 
 /**
  * Retrieves an authentication token from the API.
@@ -31,5 +32,15 @@ export async function getAuthToken() {
 
   // Parse the response data as JSON and return it.
   const data: AuthToken = await response.json();
+
+  // Set the access and refresh tokens as cookies.
+  setCookie('accessToken', data.access);
+  setCookie('refreshToken', data.refresh, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+  });
+
   return data;
 }
