@@ -1,1 +1,1 @@
-export * from './AuthTokenResponse';
+export * from './AuthToken';

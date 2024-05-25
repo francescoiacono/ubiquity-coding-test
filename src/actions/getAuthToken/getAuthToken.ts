@@ -3,6 +3,7 @@
 import urlJoin from 'url-join';
 import { AuthToken } from '@/types/AuthToken';
 import { getVariables } from './utils/getVariables';
+import { httpFetch } from '@/utils/httpFetch/httpFetch';
 
 /**
  * Retrieves an authentication token from the API.
@@ -17,7 +18,7 @@ export async function getAuthToken() {
   const apiUrl = urlJoin(API_URL, 'token/');
 
   // Fetch the token from the API.
-  const response = await fetch(apiUrl, {
+  const response = await httpFetch(apiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,11 +28,6 @@ export async function getAuthToken() {
       password: API_PASSWORD,
     }),
   });
-
-  // Throw an error if the request was not successful.
-  if (!response.ok) {
-    throw new Error('Failed to get auth token');
-  }
 
   // Parse the response data as JSON and return it.
   const data: AuthToken = await response.json();
