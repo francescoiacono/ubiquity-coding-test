@@ -1,13 +1,16 @@
 'use client';
 
 import { createSubmission } from '@/actions/createSubmission/createSubmission';
-import { getAuthTokens } from '@/actions/getAuthTokens';
+import {
+  SubmissionResults,
+  getSubmissionResults,
+} from '@/actions/getSubmissionResults';
 import { useAuth } from '@/providers/authProvider/useAuth';
 import { SubmissionPayload } from '@/types/SubmissionPayload';
 import { useState } from 'react';
 
 export default function Home() {
-  const [subData, setSubData] = useState(null);
+  const [results, setResults] = useState<SubmissionResults>();
   const { data } = useAuth();
 
   const handleSubmit = async () => {
@@ -25,7 +28,9 @@ export default function Home() {
     const accessToken = data.cookies?.accessToken || '';
 
     const sub = await createSubmission(accessToken, submission);
-    setSubData(sub);
+    const results = await getSubmissionResults(accessToken, sub.pk);
+
+    setResults(results);
   };
 
   return (
@@ -33,7 +38,7 @@ export default function Home() {
       <form action={handleSubmit}>
         <button type='submit'>Create Submission</button>
       </form>
-      <pre>{JSON.stringify(subData, null, 2)}</pre>
+      <pre>{JSON.stringify(results, null, 2)}</pre>
     </>
   );
 }

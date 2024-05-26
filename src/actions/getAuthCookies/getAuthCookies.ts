@@ -1,7 +1,7 @@
 'use server';
 
 import { getCookie } from '@/utils/getCookie';
-import { CookieNames } from '@/types/CookieNames/CookieNames';
+import { CookieNames } from '@/types/CookieNames';
 import { AuthCookies } from '@/types/AuthCookies';
 
 /**

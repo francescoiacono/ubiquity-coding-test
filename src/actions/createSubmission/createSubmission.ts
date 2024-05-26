@@ -4,6 +4,13 @@ import urlJoin from 'url-join';
 import { SubmissionPayload } from '@/types/SubmissionPayload';
 import { httpFetch } from '@/utils/httpFetch/httpFetch';
 
+interface Submission {
+  pk: string;
+  title: string;
+  abstract: string;
+  source_website: string;
+}
+
 /**
  * Creates a submission using the provided token and payload.
  * @param token - The authentication token.
@@ -14,7 +21,7 @@ import { httpFetch } from '@/utils/httpFetch/httpFetch';
 export const createSubmission = async (
   token: string,
   payload: SubmissionPayload
-) => {
+): Promise<Submission> => {
   const API_URL = process.env.API_URL;
   if (!API_URL) {
     throw new Error('API_URL is not defined');

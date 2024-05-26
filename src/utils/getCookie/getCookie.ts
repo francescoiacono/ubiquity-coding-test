@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { CookieNames } from '@/types/CookieNames/CookieNames';
+import { CookieNames } from '@/types/CookieNames';
 
 /**
  * Retrieves the value of a cookie by its name.
