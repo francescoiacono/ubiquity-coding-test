@@ -14,7 +14,7 @@ interface AuthScreenProps {
  * @returns {JSX.Element} The rendered AuthScreen component.
  */
 export const AuthScreen: React.FC<AuthScreenProps> = ({ children }) => {
-  const { cookies, loading, error } = useAuth();
+  const { data, loading, error } = useAuth();
 
   if (loading) {
     return <pre>Loading...</pre>;
@@ -22,7 +22,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ children }) => {
   if (error) {
     return <pre>{error}</pre>;
   }
-  if (!cookies) {
+  if (!data?.cookies) {
     return <pre>Unauthorized</pre>;
   }
 

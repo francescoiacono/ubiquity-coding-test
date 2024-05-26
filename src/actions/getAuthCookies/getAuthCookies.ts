@@ -9,7 +9,7 @@ import { AuthCookies } from '@/types/AuthCookies';
  * @returns An object containing the access token and refresh token
  * if both are present in the cookies, otherwise null.
  */
-export const getAuthCookies = (): AuthCookies | null => {
+export const getAuthCookies = async (): Promise<AuthCookies | null> => {
   const accessToken = getCookie(CookieNames.ACCESS_TOKEN);
   const refreshToken = getCookie(CookieNames.REFRESH_TOKEN);
 

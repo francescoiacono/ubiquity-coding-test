@@ -2,11 +2,17 @@
 
 import { getAuthCookies } from '@/actions/getAuthCookies';
 import { getAuthTokens } from '@/actions/getAuthTokens';
+import { getIpAddress } from '@/actions/getIpAddress';
 import { AuthCookies } from '@/types/AuthCookies';
 import { createContext, useCallback, useEffect, useState } from 'react';
 
-interface AuthContextProps {
+interface AuthData {
   cookies: AuthCookies | null;
+  ip: string | null;
+}
+
+interface AuthContextProps {
+  data: AuthData | null;
   loading: boolean;
   error: string | null;
 }
@@ -23,7 +29,7 @@ export const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState<AuthContextProps>({
-    cookies: null,
+    data: null,
     loading: true,
     error: '',
   });
@@ -33,18 +39,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    */
   const getIsAuthorized = useCallback(async () => {
     try {
-      let cookies = getAuthCookies();
-      if (cookies) {
-        setState({ cookies, loading: false, error: '' });
-      } else {
-        cookies = await getAuthTokens();
-        setState({ cookies, loading: false, error: '' });
-      }
+      const data: AuthData = {} as AuthData;
+
+      // Get the auth cookies from the browser
+      data.cookies = (await getAuthCookies()) || (await getAuthTokens());
+
+      // Get the IP address
+      data.ip = await getIpAddress();
+
+      // Update the state
+      setState({ data, loading: false, error: '' });
     } catch (error) {
+      // Throw the error and update the state
       console.error(error);
       const message =
         error instanceof Error ? error.message : 'An error occurred';
-      setState({ cookies: null, loading: false, error: message });
+      setState({ data: null, loading: false, error: message });
     }
   }, []);
 
