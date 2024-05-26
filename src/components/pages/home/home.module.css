@@ -1,0 +1,16 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  height: 100vh;
+}
+
+.imageContainer {
+  position: relative;
+  background-color: #f1f1f1;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

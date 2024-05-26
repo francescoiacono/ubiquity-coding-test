@@ -40,5 +40,7 @@ export const createSubmission = async (
     body: JSON.stringify({ ...payload }),
   });
 
-  return await response.json();
+  // Parse the response and return it
+  const res = await response.json();
+  return res;
 };

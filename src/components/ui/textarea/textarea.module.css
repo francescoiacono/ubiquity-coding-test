@@ -1,0 +1,15 @@
+.textareaContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.textarea {
+  max-width: 100%;
+  resize: vertical;
+  height: 10rem;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
