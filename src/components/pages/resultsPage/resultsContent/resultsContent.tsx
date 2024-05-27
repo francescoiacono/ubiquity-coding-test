@@ -1,20 +1,20 @@
 'use client';
 
-import {
-  SubmissionResults,
-  getSubmissionResults,
-} from '@/actions/getSubmissionResults';
+import { getSubmissionResults } from '@/actions/getSubmissionResults';
 import { Heading } from '@/components/ui/heading';
 import { useAuth } from '@/providers/authProvider/useAuth';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { ResultTable } from './resultsTable';
+import { ResultsList } from './resultsList';
+import { SortingResultsSelect } from './sortingResultsSelect';
+import { SubmissionResponse } from '@/types/SubmissionResponse';
+import { ResultsProvider } from '@/providers/resultsProvider';
 import styles from './resultsContent.module.css';
 
 interface ResultsContentState {
+  data: SubmissionResponse[] | null;
   loading: boolean;
   error: string | null;
-  data: SubmissionResults | null;
 }
 
 export const ResultContent = () => {
@@ -23,9 +23,9 @@ export const ResultContent = () => {
   const submissionId = searchParams.get('id');
 
   const [state, setState] = useState<ResultsContentState>({
+    data: null,
     loading: false,
     error: null,
-    data: null,
   });
 
   /**
@@ -48,7 +48,9 @@ export const ResultContent = () => {
         auth.data?.cookies?.accessToken || '',
         submissionId
       );
-      setState({ loading: false, error: null, data });
+
+      // Hide loading state
+      setState({ loading: false, error: null, data: data.answer_text });
     } catch (error) {
       console.error(error);
       const message =
@@ -58,7 +60,7 @@ export const ResultContent = () => {
     }
   }, [auth.data?.cookies?.accessToken, submissionId, state.loading]);
 
-  // Fetch the submission results when the submission ID changes
+  // When the component mounts, fetch the submission results
   useEffect(() => {
     fetchSubmissionResults();
   }, [submissionId]);
@@ -68,10 +70,15 @@ export const ResultContent = () => {
       {state.loading && <pre>Loading...</pre>}
       {state.error && <div>Error: {state.error}</div>}
       {state.data && (
-        <div className={styles.container}>
-          <Heading>Results</Heading>
-          <ResultTable data={state.data.answer_text} />
-        </div>
+        <ResultsProvider results={state.data}>
+          <div className={styles.container}>
+            <header className={styles.header}>
+              <Heading>Results</Heading>
+              <SortingResultsSelect />
+            </header>
+            <ResultsList />
+          </div>
+        </ResultsProvider>
       )}
     </div>
   );

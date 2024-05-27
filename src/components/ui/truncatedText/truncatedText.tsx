@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import styles from './readMore.module.css';
+import styles from './truncatedText.module.css';
 
 // TODO: sanitize div content with libraries
 
@@ -8,15 +10,18 @@ interface ReadMoreProps {
   maxLength: number;
 }
 
-export const ReadMore: React.FC<ReadMoreProps> = ({ text, maxLength }) => {
+export const TruncatedText: React.FC<ReadMoreProps> = ({ text, maxLength }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Toggles the read more state
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
 
+  // If the text is empty, return null
   if (!text) return null;
 
+  // If the text is less than the max length, return the text
   if (text.length <= maxLength) {
     return (
       <div
@@ -26,6 +31,7 @@ export const ReadMore: React.FC<ReadMoreProps> = ({ text, maxLength }) => {
     );
   }
 
+  // If the text is longer than the max length, truncate it
   const truncatedText = text.slice(0, maxLength) + '...';
 
   return (
