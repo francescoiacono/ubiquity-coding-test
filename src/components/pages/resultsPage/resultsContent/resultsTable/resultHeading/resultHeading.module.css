@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score {
+  color: #5f5f5f;
+  font-size: 0.8rem;
+}
+
+.visitLink {
+  background: white;
+  border: 1px solid #848484;
+  color: black;
+  font-size: 0.8rem;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.3s;
+}
+
+.visitLink:hover {
+  color: white;
+  background: #0056b3;
+  border: 1px solid #0056b3;
+}

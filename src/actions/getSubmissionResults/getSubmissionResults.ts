@@ -46,5 +46,7 @@ export const getSubmissionResults = async (
     },
   });
 
-  return await response.json();
+  // Parse the response and return it
+  const res = await response.json();
+  return res[0];
 };
