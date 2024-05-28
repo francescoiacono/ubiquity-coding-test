@@ -2,7 +2,7 @@
 
 import { SubmissionResponse } from '@/types/SubmissionResponse';
 import { createContext, useState } from 'react';
-import { SortOptions, sort } from './utils';
+import { FilterOptions, SortOptions, filter, sort } from './utils';
 
 interface ResultsProviderProps {
   results: SubmissionResponse[];
@@ -12,6 +12,8 @@ interface ResultsProviderProps {
 interface ResultsContextProps {
   results: SubmissionResponse[];
   sortBy: (options: SortOptions) => void;
+  filterBy: (options: FilterOptions) => void;
+  activeFilters?: FilterOptions;
 }
 
 /**
@@ -31,12 +33,21 @@ export const ResultsProvider: React.FC<ResultsProviderProps> = ({
    * @param options - The sorting options.
    */
   const sortBy = (options: SortOptions) => {
-    const sortedResults = sort(results, options);
+    const sortedResults = sort(state, options);
     setState(sortedResults);
   };
 
+  /**
+   * Applies the filters to the results.
+   * @param options - The filter options.
+   */
+  const filterBy = (options: FilterOptions) => {
+    const filteredResults = filter(results, options);
+    setState(filteredResults);
+  };
+
   return (
-    <ResultsContext.Provider value={{ results: state, sortBy }}>
+    <ResultsContext.Provider value={{ results: state, sortBy, filterBy }}>
       {children}
     </ResultsContext.Provider>
   );

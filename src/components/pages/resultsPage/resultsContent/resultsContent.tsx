@@ -9,6 +9,7 @@ import { ResultsList } from './resultsList';
 import { SortingResultsSelect } from './sortingResultsSelect';
 import { SubmissionResponse } from '@/types/SubmissionResponse';
 import { ResultsProvider } from '@/providers/resultsProvider';
+import { ResultsFilters } from './resultsFilters';
 import styles from './resultsContent.module.css';
 
 interface ResultsContentState {
@@ -76,7 +77,14 @@ export const ResultContent = () => {
               <Heading>Results</Heading>
               <SortingResultsSelect />
             </header>
-            <ResultsList />
+            <div className={styles.content}>
+              <aside className={styles.aside}>
+                <ResultsFilters />
+              </aside>
+              <main className={styles.main}>
+                <ResultsList />
+              </main>
+            </div>
           </div>
         </ResultsProvider>
       )}

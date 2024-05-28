@@ -1,9 +1,46 @@
 .container {
+  --header-height: 3.5rem;
+  --header-margin: 1rem;
   padding: 1rem 2rem;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  height: var(--header-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  z-index: 1000;
+}
+
+.content {
+  margin-top: calc(var(--header-height) + var(--header-margin));
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.aside {
+  flex-basis: 300px;
+  margin-top: -20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .aside {
+    margin-top: 0;
+  }
 }
