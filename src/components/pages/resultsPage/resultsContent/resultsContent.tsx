@@ -11,6 +11,7 @@ import { SubmissionResponse } from '@/types/SubmissionResponse';
 import { ResultsProvider } from '@/providers/resultsProvider';
 import { ResultsFilters } from './resultsFilters';
 import styles from './resultsContent.module.css';
+import { CircularLoading } from '@/components/ui/circularLoading';
 
 interface ResultsContentState {
   data: SubmissionResponse[] | null;
@@ -68,7 +69,7 @@ export const ResultContent = () => {
 
   return (
     <div>
-      {state.loading && <pre>Loading...</pre>}
+      {state.loading && <CircularLoading />}
       {state.error && <div>Error: {state.error}</div>}
       {state.data && (
         <ResultsProvider results={state.data}>

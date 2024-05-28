@@ -1,3 +1,4 @@
+import { CircularLoading } from '../circularLoading';
 import styles from './button.module.css';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -12,7 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button className={styles.button} disabled={loading} {...props}>
-      {loading ? 'Loading...' : children}
+      {loading ? <CircularLoading className={styles.whiteLoading} /> : children}
     </button>
   );
 };

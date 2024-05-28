@@ -17,3 +17,7 @@
 .button:not(:disabled):hover {
   background-color: #004489;
 }
+
+.button:disabled .whiteLoading {
+  color: white;
+}
