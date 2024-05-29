@@ -51,7 +51,7 @@ export const ResultsFilters = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section aria-label='filters' className={styles.container}>
       <fieldset className={styles.filter}>
         <legend>Languages</legend>
         {initialResults.languages.map((lang) => (
