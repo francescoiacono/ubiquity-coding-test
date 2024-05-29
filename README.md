@@ -42,7 +42,8 @@ If I had more time, I would have made other enhancements to the application, suc
    - I would have added real-time validation to provide instant feedback to users as they fill out the form fields by adding a state for each field and updating it as the user types.
 
 2. Use `swr` or `tanStack query` libraries to handle the data fetching and cache the results for better performance.
-3. Implement the refresh token mechanism to keep the user authenticated instead of logging them out after the token expires. The refresh token is stored in the cookies but is not used in the current implementation.
+
+3. Implement an action that uses the refresh token mechanism to keep the user authenticated for each request. The refresh token is stored in the cookies but is not used in the current implementation.
 
 4. Add tests to ensure the application works as expected.
 
